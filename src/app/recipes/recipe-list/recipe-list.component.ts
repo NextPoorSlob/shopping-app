@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Recipe} from "../recipe.model";
+import {RecipeService} from "../recipe.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,30 +10,13 @@ import {Recipe} from "../recipe.model";
 export class RecipeListComponent implements OnInit {
 
   @Output() recipeWasSelected = new EventEmitter<Recipe>();
+  recipes: Recipe[];
 
-  recipes: Recipe[] = [
-    new Recipe(
-      'A Test Recipe',
-      'This is only a test!',
-      'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/08/19/WU3203-ree-drummond-crispy-everything-chicken-cutlets_4x3.jpg.rend.hgtvcom.616.462.suffix/1660928170362.jpeg'
-    ),
-    new Recipe(
-      'Another Test Recipe',
-      'This is also only a test!',
-      'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/08/19/WU3203-ree-drummond-crispy-everything-chicken-cutlets_4x3.jpg.rend.hgtvcom.616.462.suffix/1660928170362.jpeg'
-    ),
-    new Recipe(
-      'Yet Another Test Recipe',
-      'This is too only a test!',
-      'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/08/19/WU3203-ree-drummond-crispy-everything-chicken-cutlets_4x3.jpg.rend.hgtvcom.616.462.suffix/1660928170362.jpeg'
-    )
-  ];
+  constructor(private recipeService: RecipeService) {}
+
 
   ngOnInit(): void {
-    // to add
+    this.recipes = this.recipeService.getRecipes();
   }
 
-  onRecipeSelected(recipe: Recipe) {
-    this.recipeWasSelected.emit(recipe);
-  }
 }
